@@ -38,13 +38,25 @@ client = chromadb.Client()
 
 # Get the closer 3 recepies to some recepie
 @app.get('/more_recepies/')
-async def get_similar_recepies(q: str):
-    recepies_collection = client.get_collection(name="recepies")
-    return recepies_collection.query(
-    # return collection.query(
-        query_texts=[q], # Chroma will embed this for you
-        n_results=3 # how many results to return
-    )
+def get_similar_recepies(q: str):
+    try:
+        # Try to get the collection
+        recepies_collection = client.get_collection(name="recepies")
+        # return client.get_collection(name=name)
+        return recepies_collection.query(
+        # return collection.query(
+            query_texts=[q], # Chroma will embed this for you
+            n_results=3 # how many results to return
+        )
+    except ValueError:
+        print("Not found")
+        # Create it if not found
+        recepies_collection = client.create_collection(name="recepies")
+        return recepies_collection.query(
+        # return collection.query(
+            query_texts=[q], # Chroma will embed this for you
+            n_results=3 # how many results to return
+        )
 
 @app.get('/recepies')
 def get_recepies():
@@ -54,10 +66,12 @@ def get_recepies():
 # seed the database with some data
 @app.get('/configure')
 async def seed_db():
+    if (len(client.list_collections())):
+        client.delete_collection(name="recepies")
     collection = client.create_collection(name="recepies")
     collection.add(documents=recepies, metadatas=metadata, ids=["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
 
 
-@app.delete('/clear')
-async def clear_db():
-    client.delete_collection(name="recepies")
+# @app.delete('/clear')
+# async def clear_db():
+#     client.delete_collection(name="recepies")
