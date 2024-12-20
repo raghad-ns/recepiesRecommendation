@@ -1,8 +1,17 @@
 import chromadb.config
 from fastapi import FastAPI
 import chromadb
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Frontend origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 client = chromadb.Client()
 
 recepies = [
@@ -46,7 +55,7 @@ def get_similar_recepies(q: str):
         return recepies_collection.query(
         # return collection.query(
             query_texts=[q], # Chroma will embed this for you
-            n_results=3 # how many results to return
+            n_results=4 # how many results to return
         )
     except ValueError:
         print("Not found")
@@ -60,7 +69,7 @@ def get_similar_recepies(q: str):
 
 @app.get('/recepies')
 def get_recepies():
-    return {"recepies": recepies}
+    return JSONResponse(content=recepies, status_code=200)
 
 
 # seed the database with some data

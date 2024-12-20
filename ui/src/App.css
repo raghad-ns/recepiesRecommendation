@@ -1,0 +1,75 @@
+.App {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 30px;
+}
+
+.Recipes{
+  background-color: #92c7ff;
+  display: block;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 15px;
+  font-size: 40px;
+  font-weight: 900;
+  text-align: start;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.RecipesContainer{
+  display: flex;
+  flex-direction: column;
+  row-gap: 10px;
+  width: 90%;
+  align-items: center;
+  background-color: #92c7ff3e;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.recipe{
+  background-color: #92c7ff7f;
+  border-radius: 10px;
+  width: 90%;
+  padding: 5px;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+}
+
+.recipe> button{
+  width: fit-content;
+  align-self: end;
+  outline: none;
+  border: none;
+  background-color: #92c7ff;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
+}
+
+.recommendedRecipe{
+  background-color: #92c7ff7f;
+  /* border-radius: 10px; */
+  width: 95%;
+  padding: 5px;
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  row-gap: 5px;
+  margin-left: 4%;
+  font-size: 15px;
+}
